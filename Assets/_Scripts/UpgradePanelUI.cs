@@ -46,8 +46,8 @@ public class UpgradePanelUI : MonoBehaviour
     
     private void LateUpdate()
     {
-        travelSpeedText.text = "Travel speed: " + _travelSpeed.ToString(CultureInfo.InvariantCulture);
-        transferTimeText.text = "Transfer time: " + _transferTime.ToString(CultureInfo.InvariantCulture);
+        travelSpeedText.text = "Travel speed: " + _travelSpeed.ToString("F");
+        transferTimeText.text = "Transfer time: " + _transferTime.ToString("F");
 
         _upgradeTravelSpeedButtonText.text = "Upgrade Travel Speed" + "\nCost: " + _travelSpeedNextUpgradeCost.ToString("F2");
         _upgradeTransferTimeButtonText.text = "Upgrade Transfer Time" + "\nCost: " + _transferTimeNextUpgradeCost.ToString("F2");
@@ -55,19 +55,21 @@ public class UpgradePanelUI : MonoBehaviour
 
     private void UpgradeTravelSpeed()
     {
-        _travelSpeed = CalculateNextProduction(UpgradeType.TravelSpeed);
-        _travelSpeedNextUpgradeCost = CalculateNextCost(UpgradeType.TravelSpeed);
         _travelSpeedLevel++;
+        _travelSpeed = CalculateProduction(UpgradeType.TravelSpeed);
+        _travelSpeedNextUpgradeCost = CalculateNextLevelCost(UpgradeType.TravelSpeed);
+        print(_travelSpeedLevel);
     }
     
     private void UpgradeTransferTime()
     {
-        _transferTime = CalculateNextProduction(UpgradeType.TransferTime);
-        _transferTimeNextUpgradeCost = CalculateNextCost(UpgradeType.TransferTime);
         _transferTimeLevel++;
+        _transferTime = CalculateProduction(UpgradeType.TransferTime);
+        _transferTimeNextUpgradeCost = CalculateNextLevelCost(UpgradeType.TransferTime);
+        print(_transferTimeLevel);
     }
 
-    private double CalculateNextCost(UpgradeType upgradeType)
+    private double CalculateNextLevelCost(UpgradeType upgradeType)
     {
         double nextUpgradeCost = 0;
         
@@ -84,7 +86,7 @@ public class UpgradePanelUI : MonoBehaviour
         return nextUpgradeCost;
     }
 
-    private double CalculateNextProduction(UpgradeType upgradeType)
+    private double CalculateProduction(UpgradeType upgradeType)
     {
         double nextProduction = 0;
         
